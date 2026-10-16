@@ -2,13 +2,14 @@ package signing
 
 import (
 	"bytes"
+	"encoding/base64"
 	"strconv"
 	"testing"
 	"time"
 )
 
 func TestPublishedStandardWebhooksVector(t *testing.T) {
-	key, e := DecodeSecret("whsec_MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw")
+	key, e := DecodeSecret("MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw")
 	if e != nil {
 		t.Fatal(e)
 	}
@@ -17,6 +18,17 @@ func TestPublishedStandardWebhooksVector(t *testing.T) {
 		t.Fatal("published HMAC vector mismatch")
 	}
 }
+func TestDecodeGeneratedSecret(t *testing.T) {
+	want := bytes.Repeat([]byte{42}, 32)
+	encoded := base64.StdEncoding.EncodeToString(want)
+	for _, input := range []string{encoded, "whsec_" + encoded} {
+		got, err := DecodeSecret(input)
+		if err != nil || !bytes.Equal(got, want) {
+			t.Fatal("generated signing secret did not decode")
+		}
+	}
+}
+
 func TestVerifyRawBodyTimestampAndMultipleKeys(t *testing.T) {
 	keys := [][]byte{bytes.Repeat([]byte{1}, 32), bytes.Repeat([]byte{2}, 32)}
 	now := time.Unix(1700000000, 0)
