@@ -1,0 +1,15 @@
+goos: darwin
+goarch: arm64
+pkg: relayforge/internal/events
+cpu: Apple M4
+BenchmarkAcceptancePayload/1KiB-10         	  243697	      4512 ns/op	 237.13 MB/s	    9202 B/op	      51 allocs/op
+BenchmarkAcceptancePayload/1KiB-10         	  276482	      4452 ns/op	 240.37 MB/s	    9202 B/op	      51 allocs/op
+BenchmarkAcceptancePayload/1KiB-10         	  261632	      4651 ns/op	 230.08 MB/s	    9203 B/op	      51 allocs/op
+BenchmarkAcceptancePayload/64KiB-10        	    7306	    177682 ns/op	 369.10 MB/s	  478690 B/op	      60 allocs/op
+BenchmarkAcceptancePayload/64KiB-10        	    7251	    277989 ns/op	 235.92 MB/s	  478695 B/op	      60 allocs/op
+BenchmarkAcceptancePayload/64KiB-10        	    7129	    165328 ns/op	 396.68 MB/s	  478814 B/op	      60 allocs/op
+BenchmarkAcceptancePayload/250KiB-10       	    2013	    624401 ns/op	 410.07 MB/s	 1317070 B/op	      65 allocs/op
+BenchmarkAcceptancePayload/250KiB-10       	    1906	    850220 ns/op	 301.15 MB/s	 1317097 B/op	      65 allocs/op
+BenchmarkAcceptancePayload/250KiB-10       	    1960	    625678 ns/op	 409.23 MB/s	 1316943 B/op	      65 allocs/op
+PASS
+ok  	relayforge/internal/events	12.734s

@@ -1,0 +1,29 @@
+"<workspace>/work/toolchain/golang.org/toolchain@v0.0.1-go1.27.2.darwin-arm64/bin/gofmt" -w cmd internal migrations tests
+go vet ./...
+go test -race ./...
+?   	relayforge/cmd/admin	[no test files]
+?   	relayforge/cmd/api	[no test files]
+?   	relayforge/cmd/console	[no test files]
+?   	relayforge/cmd/migrate	[no test files]
+?   	relayforge/cmd/receiver	[no test files]
+?   	relayforge/cmd/worker	[no test files]
+ok  	relayforge/internal/config	(cached)
+ok  	relayforge/internal/console	(cached)
+ok  	relayforge/internal/delivery	(cached)
+ok  	relayforge/internal/endpoints	(cached)
+ok  	relayforge/internal/events	1.615s
+ok  	relayforge/internal/httpapi	(cached)
+?   	relayforge/internal/jsonutil	[no test files]
+?   	relayforge/internal/migrate	[no test files]
+ok  	relayforge/internal/netpolicy	(cached)
+ok  	relayforge/internal/pagination	(cached)
+ok  	relayforge/internal/process	(cached)
+?   	relayforge/internal/ratelimit	[no test files]
+ok  	relayforge/internal/receiver	(cached)
+?   	relayforge/internal/receiver/schema	[no test files]
+ok  	relayforge/internal/repository/postgres	(cached)
+ok  	relayforge/internal/security	(cached)
+ok  	relayforge/internal/signing	(cached)
+ok  	relayforge/internal/telemetry	(cached)
+ok  	relayforge/internal/worker	(cached)
+?   	relayforge/migrations	[no test files]

@@ -1,0 +1,1059 @@
+{
+  "runs": [
+    {
+      "workload": "healthy",
+      "repetition": 1,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127186.0764642,
+      "actual_offer_window_s": 10.002113374999999,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.997887071541019,
+      "attempts_per_s_in_window": 9.997887071541019,
+      "successes_per_s_in_window": 9.997887071541019,
+      "drain_s_after_responses": 0.08977091699999917,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 100,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 7.132166999999967,
+        "p95": 9.303499999999687,
+        "p99": 10.396791999999877
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.65879199999975,
+        "p95": 13.74470799999905,
+        "p99": 14.72887499999942
+      },
+      "generator_lag_ms": {
+        "p50": 2.7294169999976248,
+        "p95": 5.182041999999498,
+        "p99": 5.34404199999905
+      },
+      "first_attempt_queue_ms": {
+        "p50": 8.719,
+        "p95": 16.802,
+        "p99": 20.067
+      },
+      "attempt_http_ms": {
+        "p50": 1,
+        "p95": 1,
+        "p99": 2
+      },
+      "ack_ms_successes_only": {
+        "p50": 12.629,
+        "p95": 21.138,
+        "p99": 24.372
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 120
+      }
+    },
+    {
+      "workload": "healthy",
+      "repetition": 2,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127200.5783129,
+      "actual_offer_window_s": 10.002409042000004,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.997591538208557,
+      "attempts_per_s_in_window": 9.997591538208557,
+      "successes_per_s_in_window": 9.997591538208557,
+      "drain_s_after_responses": 0.08789699999999812,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 100,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 7.390458999999794,
+        "p95": 10.526875000000047,
+        "p99": 14.74666600000063
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.398208000000352,
+        "p95": 14.505292000002612,
+        "p99": 16.747750000000394
+      },
+      "generator_lag_ms": {
+        "p50": 1.7960000000023513,
+        "p95": 5.153625000001938,
+        "p99": 5.1971670000021675
+      },
+      "first_attempt_queue_ms": {
+        "p50": 9.371,
+        "p95": 16.374,
+        "p99": 19.095000000000002
+      },
+      "attempt_http_ms": {
+        "p50": 1,
+        "p95": 1,
+        "p99": 4
+      },
+      "ack_ms_successes_only": {
+        "p50": 13.474,
+        "p95": 21.989,
+        "p99": 23.945
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 120
+      }
+    },
+    {
+      "workload": "healthy",
+      "repetition": 1,
+      "offered_events_per_s": 50,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127214.044961,
+      "actual_offer_window_s": 10.000570040999996,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 500,
+      "accepted": 500,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 500,
+      "acceptances_per_s_total_over_offer_window": 49.99714995746413,
+      "attempts_per_s_in_window": 49.99714995746413,
+      "successes_per_s_in_window": 49.99714995746413,
+      "drain_s_after_responses": 0.09298333299999939,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 500,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 3.7018339999974614,
+        "p95": 5.798083000001952,
+        "p99": 7.295042000002638
+      },
+      "arrival_to_response_ms": {
+        "p50": 5.64429099999586,
+        "p95": 9.103457999998454,
+        "p99": 10.06745800000175
+      },
+      "generator_lag_ms": {
+        "p50": 1.6537909999954081,
+        "p95": 4.644665999997244,
+        "p99": 5.018165999999269
+      },
+      "first_attempt_queue_ms": {
+        "p50": 6.625,
+        "p95": 14.815999999999999,
+        "p99": 17.818
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      },
+      "ack_ms_successes_only": {
+        "p50": 8.716,
+        "p95": 17.576,
+        "p99": 20.566000000000003
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 520
+      }
+    },
+    {
+      "workload": "healthy",
+      "repetition": 2,
+      "offered_events_per_s": 50,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127228.659036,
+      "actual_offer_window_s": 10.002198874999998,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 500,
+      "accepted": 500,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 500,
+      "acceptances_per_s_total_over_offer_window": 49.989008041994175,
+      "attempts_per_s_in_window": 49.989008041994175,
+      "successes_per_s_in_window": 49.989008041994175,
+      "drain_s_after_responses": 0.08991329199999853,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 500,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 3.753791999997702,
+        "p95": 5.70208400000638,
+        "p99": 8.891875000003324
+      },
+      "arrival_to_response_ms": {
+        "p50": 5.907125000000235,
+        "p95": 9.310999999996739,
+        "p99": 12.353374999996447
+      },
+      "generator_lag_ms": {
+        "p50": 1.8767499999938764,
+        "p95": 4.668791999996813,
+        "p99": 5.037291999997251
+      },
+      "first_attempt_queue_ms": {
+        "p50": 6.913,
+        "p95": 15.945,
+        "p99": 20.479
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      },
+      "ack_ms_successes_only": {
+        "p50": 8.994,
+        "p95": 18.020999999999997,
+        "p99": 22.982
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 520
+      }
+    },
+    {
+      "workload": "healthy",
+      "repetition": 1,
+      "offered_events_per_s": 100,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127243.497259,
+      "actual_offer_window_s": 10.000220291999995,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 1000,
+      "accepted": 1000,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 1000,
+      "acceptances_per_s_total_over_offer_window": 99.99779712852755,
+      "attempts_per_s_in_window": 99.89779933139903,
+      "successes_per_s_in_window": 99.89779933139903,
+      "drain_s_after_responses": 0.08371141700000351,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 1000,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 2.883042000007663,
+        "p95": 5.441666999999484,
+        "p99": 6.674374999988686
+      },
+      "arrival_to_response_ms": {
+        "p50": 3.861958000001664,
+        "p95": 6.25324999998611,
+        "p99": 7.752042000007009
+      },
+      "generator_lag_ms": {
+        "p50": 0.34654200000261426,
+        "p95": 2.447541999984537,
+        "p99": 2.5083749999907923
+      },
+      "first_attempt_queue_ms": {
+        "p50": 5.324,
+        "p95": 12.947000000000001,
+        "p99": 15.826
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 0,
+        "p99": 0
+      },
+      "ack_ms_successes_only": {
+        "p50": 6.8469999999999995,
+        "p95": 14.792,
+        "p99": 19.199
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 1020
+      }
+    },
+    {
+      "workload": "healthy",
+      "repetition": 2,
+      "offered_events_per_s": 100,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127258.0894132,
+      "actual_offer_window_s": 10.001154834000005,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 1000,
+      "accepted": 1000,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 1000,
+      "acceptances_per_s_total_over_offer_window": 99.98845299348753,
+      "attempts_per_s_in_window": 99.98845299348753,
+      "successes_per_s_in_window": 99.98845299348753,
+      "drain_s_after_responses": 0.08538791600000195,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 1000,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 3.034417000009171,
+        "p95": 5.55429199999935,
+        "p99": 7.013666999995394
+      },
+      "arrival_to_response_ms": {
+        "p50": 4.071624999994583,
+        "p95": 6.619916999994757,
+        "p99": 8.25554200000056
+      },
+      "generator_lag_ms": {
+        "p50": 0.558792000006747,
+        "p95": 2.4675000000087266,
+        "p99": 2.5201670000001286
+      },
+      "first_attempt_queue_ms": {
+        "p50": 5.04,
+        "p95": 12.401,
+        "p99": 15.921000000000001
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 0,
+        "p99": 0
+      },
+      "ack_ms_successes_only": {
+        "p50": 6.793,
+        "p95": 14.668000000000001,
+        "p99": 19.081
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 1020
+      }
+    },
+    {
+      "workload": "slow",
+      "repetition": 1,
+      "offered_events_per_s": 50,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127272.692481,
+      "actual_offer_window_s": 10.003516665999996,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 500,
+      "accepted": 500,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 500,
+      "acceptances_per_s_total_over_offer_window": 49.98242285129614,
+      "attempts_per_s_in_window": 37.68674682987729,
+      "successes_per_s_in_window": 36.887028064256555,
+      "drain_s_after_responses": 3.620896541999997,
+      "window_end_backlog": 125,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 500,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 4.9087920000090435,
+        "p95": 7.059957999999256,
+        "p99": 9.521000000006552
+      },
+      "arrival_to_response_ms": {
+        "p50": 7.859749999994392,
+        "p95": 10.831874999993829,
+        "p99": 12.289207999998553
+      },
+      "generator_lag_ms": {
+        "p50": 2.730249999999046,
+        "p95": 5.0092909999932544,
+        "p99": 5.107999999992785
+      },
+      "first_attempt_queue_ms": {
+        "p50": 1584.482,
+        "p95": 3084.73,
+        "p99": 3231.651
+      },
+      "attempt_http_ms": {
+        "p50": 203,
+        "p95": 206,
+        "p99": 206
+      },
+      "ack_ms_successes_only": {
+        "p50": 1788.6200000000001,
+        "p95": 3291.772,
+        "p99": 3443.428
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 520
+      }
+    },
+    {
+      "workload": "slow",
+      "repetition": 2,
+      "offered_events_per_s": 50,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127290.305859,
+      "actual_offer_window_s": 10.000519834000002,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 500,
+      "accepted": 500,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 500,
+      "acceptances_per_s_total_over_offer_window": 49.99740096510666,
+      "attempts_per_s_in_window": 37.69804032769042,
+      "successes_per_s_in_window": 36.89808191224871,
+      "drain_s_after_responses": 3.6129060419999917,
+      "window_end_backlog": 127,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 500,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 5.239499999987629,
+        "p95": 7.867500000003247,
+        "p99": 10.257292000005691
+      },
+      "arrival_to_response_ms": {
+        "p50": 8.06658400000515,
+        "p95": 11.456167000005735,
+        "p99": 14.183625000001143
+      },
+      "generator_lag_ms": {
+        "p50": 2.5635000000079344,
+        "p95": 4.976041999995573,
+        "p99": 5.111708999990583
+      },
+      "first_attempt_queue_ms": {
+        "p50": 1584.173,
+        "p95": 3175.062,
+        "p99": 3398.772
+      },
+      "attempt_http_ms": {
+        "p50": 203,
+        "p95": 206,
+        "p99": 206
+      },
+      "ack_ms_successes_only": {
+        "p50": 1790.237,
+        "p95": 3385.599,
+        "p99": 3604.895
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 520
+      }
+    },
+    {
+      "workload": "permanent",
+      "repetition": 1,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127306.981838,
+      "actual_offer_window_s": 10.002407707999993,
+      "warmup_s": 0,
+      "warmup_events": 0,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.997592871566246,
+      "attempts_per_s_in_window": 9.997592871566246,
+      "successes_per_s_in_window": 0.0,
+      "drain_s_after_responses": 0.09924762500000384,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 100,
+      "delivered": 0,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 7.185666999987461,
+        "p95": 9.401875000008886,
+        "p99": 14.163999999993848
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.796666999989156,
+        "p95": 13.362374999985605,
+        "p99": 19.246542000018962
+      },
+      "generator_lag_ms": {
+        "p50": 2.7663329999825237,
+        "p95": 5.1789580000161095,
+        "p99": 6.398375000003398
+      },
+      "first_attempt_queue_ms": {
+        "p50": 9.311,
+        "p95": 16.031,
+        "p99": 18.533
+      },
+      "attempt_http_ms": {
+        "p50": 1,
+        "p95": 1,
+        "p99": 1
+      },
+      "ack_ms_successes_only": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "receiver_503": 0,
+      "receiver_400": 100,
+      "final_statuses": {
+        "dead_letter": 100
+      }
+    },
+    {
+      "workload": "permanent",
+      "repetition": 2,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127319.160608,
+      "actual_offer_window_s": 10.00099608299999,
+      "warmup_s": 0,
+      "warmup_events": 0,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.999004016208263,
+      "attempts_per_s_in_window": 9.999004016208263,
+      "successes_per_s_in_window": 0.0,
+      "drain_s_after_responses": 0.09372462500002143,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 100,
+      "delivered": 0,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 6.912999999997282,
+        "p95": 9.847291999989238,
+        "p99": 15.829625000009173
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.47008299999652,
+        "p95": 14.72079100000201,
+        "p99": 17.01041600000508
+      },
+      "generator_lag_ms": {
+        "p50": 2.5890409999931308,
+        "p95": 5.167832999973143,
+        "p99": 5.175415999985944
+      },
+      "first_attempt_queue_ms": {
+        "p50": 9.034,
+        "p95": 15.459,
+        "p99": 19.348
+      },
+      "attempt_http_ms": {
+        "p50": 1,
+        "p95": 1,
+        "p99": 1
+      },
+      "ack_ms_successes_only": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "receiver_503": 0,
+      "receiver_400": 100,
+      "final_statuses": {
+        "dead_letter": 100
+      }
+    },
+    {
+      "workload": "outage",
+      "repetition": 1,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127331.296426,
+      "actual_offer_window_s": 10.004856541999999,
+      "warmup_s": 0,
+      "warmup_events": 0,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.995145815455112,
+      "attempts_per_s_in_window": 21.08975767061029,
+      "successes_per_s_in_window": 9.595339982836908,
+      "drain_s_after_responses": 2.426993708000026,
+      "window_end_backlog": 4,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 100,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 6.118041999997104,
+        "p95": 8.811291000000665,
+        "p99": 10.199999999997544
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.306874999992942,
+        "p95": 12.59158400000615,
+        "p99": 13.2832090000079
+      },
+      "generator_lag_ms": {
+        "p50": 2.7848750000032396,
+        "p95": 5.145249999998214,
+        "p99": 5.189625000014075
+      },
+      "first_attempt_queue_ms": {
+        "p50": 8.678999999999998,
+        "p95": 15.461,
+        "p99": 18.228
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 2
+      },
+      "ack_ms_successes_only": {
+        "p50": 22.362,
+        "p95": 8726.802,
+        "p99": 9684.096
+      },
+      "receiver_503": 115,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 100
+      }
+    },
+    {
+      "workload": "outage",
+      "repetition": 2,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127346.284384,
+      "actual_offer_window_s": 10.001232708000003,
+      "warmup_s": 0,
+      "warmup_events": 0,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.998767443938169,
+      "attempts_per_s_in_window": 20.097522562315717,
+      "successes_per_s_in_window": 9.698804420620023,
+      "drain_s_after_responses": 7.961102624999995,
+      "window_end_backlog": 3,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 100,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 6.3447910000036245,
+        "p95": 8.932832999988705,
+        "p99": 10.909916000002795
+      },
+      "arrival_to_response_ms": {
+        "p50": 9.126083000012386,
+        "p95": 13.229875000007496,
+        "p99": 14.129792000034058
+      },
+      "generator_lag_ms": {
+        "p50": 1.7807080000125097,
+        "p95": 5.174125000024787,
+        "p99": 5.241708000028211
+      },
+      "first_attempt_queue_ms": {
+        "p50": 8.767999999999999,
+        "p95": 17.318,
+        "p99": 27.746
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 2
+      },
+      "ack_ms_successes_only": {
+        "p50": 34.371,
+        "p95": 6977.602,
+        "p99": 14274.687
+      },
+      "receiver_503": 104,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 100
+      }
+    },
+    {
+      "workload": "fanout",
+      "repetition": 1,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127369.0334778,
+      "actual_offer_window_s": 10.000121666000013,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 10,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.999878335480231,
+      "attempts_per_s_in_window": 99.99878335480231,
+      "successes_per_s_in_window": 99.99878335480231,
+      "drain_s_after_responses": 0.08982491599999776,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 1000,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 6.879874999981439,
+        "p95": 8.935665999985076,
+        "p99": 10.588000000012698
+      },
+      "arrival_to_response_ms": {
+        "p50": 8.75270800000294,
+        "p95": 12.810791000021027,
+        "p99": 13.681040999983907
+      },
+      "generator_lag_ms": {
+        "p50": 1.402000000013004,
+        "p95": 5.047749999988582,
+        "p99": 5.14599999999632
+      },
+      "first_attempt_queue_ms": {
+        "p50": 30.334,
+        "p95": 51.096999999999994,
+        "p99": 57.907000000000004
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 0,
+        "p99": 0
+      },
+      "ack_ms_successes_only": {
+        "p50": 31.679,
+        "p95": 52.577,
+        "p99": 60.098
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 1200
+      }
+    },
+    {
+      "workload": "fanout",
+      "repetition": 2,
+      "offered_events_per_s": 10,
+      "configured_duration_s": 10.0,
+      "window_start_unix_s": 1792127383.568473,
+      "actual_offer_window_s": 10.002262292000012,
+      "warmup_s": 2,
+      "warmup_events": 20,
+      "tenants": 4,
+      "endpoints_per_event": 10,
+      "workers": 2,
+      "crash_to_all_recovered_s": null,
+      "crash_kill_offset_s": null,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 100,
+      "accepted": 100,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 100,
+      "acceptances_per_s_total_over_offer_window": 9.997738219680741,
+      "attempts_per_s_in_window": 99.97738219680741,
+      "successes_per_s_in_window": 99.97738219680741,
+      "drain_s_after_responses": 0.08570433299999536,
+      "window_end_backlog": 0,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 1000,
+      "lease_expirations": 0,
+      "ingestion_request_ms": {
+        "p50": 6.74179199998548,
+        "p95": 9.309208000018998,
+        "p99": 9.908417000019654
+      },
+      "arrival_to_response_ms": {
+        "p50": 8.521084000022938,
+        "p95": 13.781417000018337,
+        "p99": 14.667959000036035
+      },
+      "generator_lag_ms": {
+        "p50": 1.2596670000277754,
+        "p95": 5.09833399999593,
+        "p99": 5.1505000000133805
+      },
+      "first_attempt_queue_ms": {
+        "p50": 30.481,
+        "p95": 51.752,
+        "p99": 57.444
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 0,
+        "p99": 0
+      },
+      "ack_ms_successes_only": {
+        "p50": 31.707,
+        "p95": 53.051,
+        "p99": 59.071
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 1200
+      }
+    },
+    {
+      "workload": "crash",
+      "repetition": 1,
+      "offered_events_per_s": 1,
+      "configured_duration_s": 2,
+      "window_start_unix_s": 1792127395.77191,
+      "actual_offer_window_s": 2.0050790420000055,
+      "warmup_s": 0,
+      "warmup_events": 0,
+      "tenants": 4,
+      "endpoints_per_event": 1,
+      "workers": 1,
+      "crash_to_all_recovered_s": 31.717245374999976,
+      "crash_kill_offset_s": 2.1514310000000023,
+      "slots_per_worker": 4,
+      "tenant_in_flight": 4,
+      "db_pool_per_process": 10,
+      "poll_ms": 20,
+      "payload_bytes": 1070,
+      "rate_limit_enabled": false,
+      "tracing_enabled": false,
+      "offered": 2,
+      "accepted": 2,
+      "nonaccepted_or_dropped": 0,
+      "accepted_completed_by_window": 2,
+      "acceptances_per_s_total_over_offer_window": 0.9974669118305983,
+      "attempts_per_s_in_window": 0.9974669118305983,
+      "successes_per_s_in_window": 0.0,
+      "drain_s_after_responses": 31.657093374999988,
+      "window_end_backlog": 2,
+      "unfinished_deliveries": 0,
+      "dead_letter_deliveries": 0,
+      "delivered": 2,
+      "lease_expirations": 2,
+      "ingestion_request_ms": {
+        "p50": 6.206542000001036,
+        "p95": 10.015083000013192,
+        "p99": 10.015083000013192
+      },
+      "arrival_to_response_ms": {
+        "p50": 10.379041999982519,
+        "p95": 10.976791999979696,
+        "p99": 10.976791999979696
+      },
+      "generator_lag_ms": {
+        "p50": 0.3638339999838536,
+        "p95": 4.770167000003767,
+        "p99": 4.770167000003767
+      },
+      "first_attempt_queue_ms": {
+        "p50": 14.781,
+        "p95": 18.504,
+        "p99": 18.504
+      },
+      "attempt_http_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 1
+      },
+      "ack_ms_successes_only": {
+        "p50": 32534.418999999998,
+        "p95": 32668.098,
+        "p99": 32668.098
+      },
+      "receiver_503": 0,
+      "receiver_400": 0,
+      "final_statuses": {
+        "delivered": 2
+      }
+    }
+  ],
+  "child_resource_usage": {
+    "user_cpu_s": 32.523978,
+    "system_cpu_s": 28.959182,
+    "max_rss_native_units": 105316352
+  }
+}

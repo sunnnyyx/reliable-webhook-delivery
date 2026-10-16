@@ -1,0 +1,16 @@
+{
+  "exit_code": 0,
+  "config": {
+    "protocol_version": "v1.0.0",
+    "scanner_name": "govulncheck",
+    "scanner_version": "v1.8.0",
+    "db": "https://vuln.go.dev",
+    "db_last_modified": "2026-10-08T22:31:09Z",
+    "go_version": "go1.27.2",
+    "scan_level": "symbol",
+    "scan_mode": "source"
+  },
+  "finding_count": 0,
+  "advisory_records_returned": 255,
+  "note": "OSV records are database advisories, not findings. No finding messages returned at symbol scan level. Not an assurance of absence of unknown/application flaws."
+}

@@ -1,0 +1,30 @@
+groups:
+  - name: relayforge
+    rules:
+      - alert: RelayForgeAPIScrapeUnavailable
+        expr: up{job="relayforge-api"} == 0
+        for: 2m
+        labels: {severity: warning}
+        annotations:
+          summary: API operational metrics cannot be scraped
+          description: Check the local process, loopback listener, Docker Desktop host access and metrics configuration.
+      - alert: RelayForgeDependencyUnavailable
+        expr: relayforge_dependency_up == 0
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: A configured critical dependency is unavailable
+          description: Inspect readiness, PostgreSQL and configured Redis. Redis outage holds dispatch while API acceptance can remain healthy.
+      - alert: RelayForgeDueWorkAging
+        expr: (relayforge_oldest_due_age_seconds > 60) and on(job,instance,role) (relayforge_queue_snapshot_up == 1)
+        for: 2m
+        labels: {severity: warning}
+        annotations:
+          summary: Eligible due work has waited over one minute
+          description: Inspect worker capacity, endpoint lifecycle, rate limiting and receiver failures. This demo threshold is not an SLO.
+      - alert: RelayForgeLeaseRecoveries
+        expr: sum(increase(relayforge_recoveries_total{reason="lease_expired"}[5m])) > 0
+        labels: {severity: info}
+        annotations:
+          summary: Workers recovered expired leases
+          description: Inspect worker restarts, request duration and ambiguous acknowledgments before replaying work.

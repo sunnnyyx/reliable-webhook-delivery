@@ -1,0 +1,96 @@
+=== RUN   TestEndpointAuthenticationIsolationAndSecrets
+--- PASS: TestEndpointAuthenticationIsolationAndSecrets (0.21s)
+=== RUN   TestEndpointPaginationValidationAndAtomicCreation
+--- PASS: TestEndpointPaginationValidationAndAtomicCreation (0.65s)
+=== RUN   TestConcurrentEndpointLimitAndRotation
+--- PASS: TestConcurrentEndpointLimitAndRotation (0.23s)
+=== RUN   TestAuthUnavailableStorageReturns503
+--- PASS: TestAuthUnavailableStorageReturns503 (0.08s)
+=== RUN   TestBoundedBacklogExactCapacityAndOversizeFanout
+--- PASS: TestBoundedBacklogExactCapacityAndOversizeFanout (0.13s)
+=== RUN   TestIngestionFanoutSnapshotsAndTenantViews
+--- PASS: TestIngestionFanoutSnapshotsAndTenantViews (0.15s)
+=== RUN   TestConcurrentIdempotencyAndLostResponse
+--- PASS: TestConcurrentIdempotencyAndLostResponse (0.14s)
+=== RUN   TestExpiredIdempotencyKeyReplacedOnce
+--- PASS: TestExpiredIdempotencyKeyReplacedOnce (0.14s)
+=== RUN   TestIngestionRollbackAndDeferredCompleteness
+--- PASS: TestIngestionRollbackAndDeferredCompleteness (0.12s)
+=== RUN   TestIngestionRequestValidationAndPagination
+--- PASS: TestIngestionRequestValidationAndPagination (0.63s)
+=== RUN   TestAcceptanceAndDeletionCoordinateWithoutOrphans
+--- PASS: TestAcceptanceAndDeletionCoordinateWithoutOrphans (0.17s)
+=== RUN   TestMigrationRoundTrip
+--- PASS: TestMigrationRoundTrip (0.15s)
+=== RUN   TestReceiverTransactionalDeduplicationAndNamespaces
+--- PASS: TestReceiverTransactionalDeduplicationAndNamespaces (0.17s)
+=== RUN   TestReceiverMigrationRoundTrip
+--- PASS: TestReceiverMigrationRoundTrip (0.11s)
+=== RUN   TestRotationQueuedDeliveriesAndRetiredKeys
+--- PASS: TestRotationQueuedDeliveriesAndRetiredKeys (0.18s)
+=== RUN   TestKilledWorkerAcknowledgmentDeduplicated
+--- PASS: TestKilledWorkerAcknowledgmentDeduplicated (1.65s)
+=== RUN   TestRecoveryConcurrentAndFinite
+--- PASS: TestRecoveryConcurrentAndFinite (0.22s)
+=== RUN   TestCrashWorkerHelper
+--- PASS: TestCrashWorkerHelper (0.00s)
+=== RUN   TestKilledWorkerAndAmbiguousAcknowledgment
+=== RUN   TestKilledWorkerAndAmbiguousAcknowledgment/after_claim
+=== RUN   TestKilledWorkerAndAmbiguousAcknowledgment/after_remote_effect
+--- PASS: TestKilledWorkerAndAmbiguousAcknowledgment (4.24s)
+    --- PASS: TestKilledWorkerAndAmbiguousAcknowledgment/after_claim (2.48s)
+    --- PASS: TestKilledWorkerAndAmbiguousAcknowledgment/after_remote_effect (1.77s)
+=== RUN   TestRecoveryBudgetAndAtomicRollback
+--- PASS: TestRecoveryBudgetAndAtomicRollback (0.14s)
+=== RUN   TestReceiverOutageRestartAndRetryAfter
+--- PASS: TestReceiverOutageRestartAndRetryAfter (4.50s)
+=== RUN   TestReplayConcurrencyIdentityAndHistory
+--- PASS: TestReplayConcurrencyIdentityAndHistory (0.26s)
+=== RUN   TestReplayAPIValidationAndLostResponse
+--- PASS: TestReplayAPIValidationAndLostResponse (0.13s)
+=== RUN   TestReplayStateRetentionAndAvailability
+--- PASS: TestReplayStateRetentionAndAvailability (0.12s)
+=== RUN   TestConcurrentDifferentReplayKeysStartOneCycle
+--- PASS: TestConcurrentDifferentReplayKeysStartOneCycle (0.19s)
+=== RUN   TestReplayRechecksRetentionAfterEventLockWait
+--- PASS: TestReplayRechecksRetentionAfterEventLockWait (0.62s)
+=== RUN   TestRedisBucketAtomicAcrossClientsAndRefill
+--- PASS: TestRedisBucketAtomicAcrossClientsAndRefill (1.01s)
+=== RUN   TestLimiterDeferralPersistsWithoutAttemptBudget
+--- PASS: TestLimiterDeferralPersistsWithoutAttemptBudget (1.24s)
+=== RUN   TestBacklogAdmissionConcurrentAndIdempotent
+--- PASS: TestBacklogAdmissionConcurrentAndIdempotent (0.22s)
+=== RUN   TestTenantFairnessAcrossWorkerRunners
+--- PASS: TestTenantFairnessAcrossWorkerRunners (0.34s)
+=== RUN   TestLimiterOutageDefersAndAgeSweepStillRuns
+--- PASS: TestLimiterOutageDefersAndAgeSweepStillRuns (0.22s)
+=== RUN   TestLifecycleMutationDuringAuthorizedHTTP
+=== RUN   TestLifecycleMutationDuringAuthorizedHTTP/disable
+=== RUN   TestLifecycleMutationDuringAuthorizedHTTP/delete
+--- PASS: TestLifecycleMutationDuringAuthorizedHTTP (0.25s)
+    --- PASS: TestLifecycleMutationDuringAuthorizedHTTP/disable (0.13s)
+    --- PASS: TestLifecycleMutationDuringAuthorizedHTTP/delete (0.12s)
+=== RUN   TestTenantDisableSerializesAdmissionAndClaim
+redis: 2026/10/16 10:41:23 pool.go:770: redis: connection pool: failed to dial after 5 attempts: dial tcp 127.0.0.1:63633: connect: connection refused
+--- PASS: TestTenantDisableSerializesAdmissionAndClaim (0.13s)
+=== RUN   TestTelemetryAcceptanceDispatchReplayAndTraceLinks
+--- PASS: TestTelemetryAcceptanceDispatchReplayAndTraceLinks (0.17s)
+=== RUN   TestTelemetryRecoveryDeferralAndUnavailableSnapshot
+--- PASS: TestTelemetryRecoveryDeferralAndUnavailableSnapshot (0.13s)
+=== RUN   TestReadinessRejectsMissingCriticalSchema
+--- PASS: TestReadinessRejectsMissingCriticalSchema (0.10s)
+=== RUN   TestCollectorOutageDoesNotBlockDurableAPI
+2026/10/16 10:41:24 trace export unavailable
+--- PASS: TestCollectorOutageDoesNotBlockDurableAPI (0.12s)
+=== RUN   TestConcurrentClaimersAndAtomicFencedCompletion
+--- PASS: TestConcurrentClaimersAndAtomicFencedCompletion (0.24s)
+=== RUN   TestSignedNetworkDispatchOccursOutsideDatabaseLocks
+--- PASS: TestSignedNetworkDispatchOccursOutsideDatabaseLocks (0.14s)
+=== RUN   TestDisableDeleteAndClaimShareEndpointLockOrder
+--- PASS: TestDisableDeleteAndClaimShareEndpointLockOrder (0.14s)
+=== RUN   TestCompletionRechecksExpirationAfterLockWait
+--- PASS: TestCompletionRechecksExpirationAfterLockWait (0.22s)
+=== RUN   TestWorkerFailureSchedulingKeepsBytesAndAttempts
+--- PASS: TestWorkerFailureSchedulingKeepsBytesAndAttempts (0.13s)
+PASS
+ok  	relayforge/tests/integration	21.886s

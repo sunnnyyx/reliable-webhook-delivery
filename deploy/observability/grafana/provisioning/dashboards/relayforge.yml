@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: RelayForge
+    folder: RelayForge
+    type: file
+    disableDeletion: true
+    editable: false
+    options:
+      path: /etc/relayforge/grafana/dashboards

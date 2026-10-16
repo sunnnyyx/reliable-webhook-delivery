@@ -1,0 +1,606 @@
+{
+  "summary": {
+    "workload": "crash",
+    "repetition": 1,
+    "offered_events_per_s": 1,
+    "configured_duration_s": 2,
+    "window_start_unix_s": 1792127395.77191,
+    "actual_offer_window_s": 2.0050790420000055,
+    "warmup_s": 0,
+    "warmup_events": 0,
+    "tenants": 4,
+    "endpoints_per_event": 1,
+    "workers": 1,
+    "crash_to_all_recovered_s": 31.717245374999976,
+    "crash_kill_offset_s": 2.1514310000000023,
+    "slots_per_worker": 4,
+    "tenant_in_flight": 4,
+    "db_pool_per_process": 10,
+    "poll_ms": 20,
+    "payload_bytes": 1070,
+    "rate_limit_enabled": false,
+    "tracing_enabled": false,
+    "offered": 2,
+    "accepted": 2,
+    "nonaccepted_or_dropped": 0,
+    "accepted_completed_by_window": 2,
+    "acceptances_per_s_total_over_offer_window": 0.9974669118305983,
+    "attempts_per_s_in_window": 0.9974669118305983,
+    "successes_per_s_in_window": 0.0,
+    "drain_s_after_responses": 31.657093374999988,
+    "window_end_backlog": 2,
+    "unfinished_deliveries": 0,
+    "dead_letter_deliveries": 0,
+    "delivered": 2,
+    "lease_expirations": 2,
+    "ingestion_request_ms": {
+      "p50": 6.206542000001036,
+      "p95": 10.015083000013192,
+      "p99": 10.015083000013192
+    },
+    "arrival_to_response_ms": {
+      "p50": 10.379041999982519,
+      "p95": 10.976791999979696,
+      "p99": 10.976791999979696
+    },
+    "generator_lag_ms": {
+      "p50": 0.3638339999838536,
+      "p95": 4.770167000003767,
+      "p99": 4.770167000003767
+    },
+    "first_attempt_queue_ms": {
+      "p50": 14.781,
+      "p95": 18.504,
+      "p99": 18.504
+    },
+    "attempt_http_ms": {
+      "p50": 0,
+      "p95": 1,
+      "p99": 1
+    },
+    "ack_ms_successes_only": {
+      "p50": 32534.418999999998,
+      "p95": 32668.098,
+      "p99": 32668.098
+    },
+    "receiver_503": 0,
+    "receiver_400": 0,
+    "final_statuses": {
+      "delivered": 2
+    }
+  },
+  "offers": [
+    {
+      "ordinal": 0,
+      "scheduled_offset_s": 0.0,
+      "generator_lag_ms": 0.3638339999838536,
+      "request_ms": 10.015083000013192,
+      "arrival_to_response_ms": 10.379041999982519,
+      "status": 202,
+      "event_id": "ded5cea8-d68c-43dd-a95c-2108b9e3b92c"
+    },
+    {
+      "ordinal": 1,
+      "scheduled_offset_s": 1.0,
+      "generator_lag_ms": 4.770167000003767,
+      "request_ms": 6.206542000001036,
+      "arrival_to_response_ms": 10.976791999979696,
+      "status": 202,
+      "event_id": "0a159c5d-ebd4-47b0-8eba-f616cbcc4d46"
+    }
+  ],
+  "attempts": [
+    {
+      "delivery_id": "e413c9d8-e4a0-4b39-8818-3a19c643ee8f",
+      "cycle_number": 1,
+      "attempt_number": 1,
+      "outcome": "lease_expired",
+      "http_status": null,
+      "latency_ms": null,
+      "error_code": "lease_expired",
+      "started_at": "2026-10-16T05:09:55.794705+00:00",
+      "finished_at": "2026-10-16T05:10:27.977154+00:00",
+      "created_at": "2026-10-16T05:09:55.776201+00:00",
+      "delivered_at": "2026-10-16T05:10:28.31062+00:00",
+      "status": "delivered"
+    },
+    {
+      "delivery_id": "94aa0d37-2235-4eb3-94f0-9d7b93b01c34",
+      "cycle_number": 1,
+      "attempt_number": 1,
+      "outcome": "lease_expired",
+      "http_status": null,
+      "latency_ms": null,
+      "error_code": "lease_expired",
+      "started_at": "2026-10-16T05:09:56.794014+00:00",
+      "finished_at": "2026-10-16T05:10:27.981667+00:00",
+      "created_at": "2026-10-16T05:09:56.779233+00:00",
+      "delivered_at": "2026-10-16T05:10:29.447331+00:00",
+      "status": "delivered"
+    },
+    {
+      "delivery_id": "e413c9d8-e4a0-4b39-8818-3a19c643ee8f",
+      "cycle_number": 1,
+      "attempt_number": 2,
+      "outcome": "success",
+      "http_status": 204,
+      "latency_ms": 1,
+      "error_code": null,
+      "started_at": "2026-10-16T05:10:28.302336+00:00",
+      "finished_at": "2026-10-16T05:10:28.311254+00:00",
+      "created_at": "2026-10-16T05:09:55.776201+00:00",
+      "delivered_at": "2026-10-16T05:10:28.31062+00:00",
+      "status": "delivered"
+    },
+    {
+      "delivery_id": "94aa0d37-2235-4eb3-94f0-9d7b93b01c34",
+      "cycle_number": 1,
+      "attempt_number": 2,
+      "outcome": "success",
+      "http_status": 204,
+      "latency_ms": 0,
+      "error_code": null,
+      "started_at": "2026-10-16T05:10:29.443607+00:00",
+      "finished_at": "2026-10-16T05:10:29.447826+00:00",
+      "created_at": "2026-10-16T05:09:56.779233+00:00",
+      "delivered_at": "2026-10-16T05:10:29.447331+00:00",
+      "status": "delivered"
+    }
+  ],
+  "deliveries": [
+    {
+      "id": "94aa0d37-2235-4eb3-94f0-9d7b93b01c34",
+      "status": "delivered",
+      "created_at": "2026-10-16T05:09:56.779233+00:00",
+      "delivered_at": "2026-10-16T05:10:29.447331+00:00",
+      "lifetime_attempt_count": 2
+    },
+    {
+      "id": "e413c9d8-e4a0-4b39-8818-3a19c643ee8f",
+      "status": "delivered",
+      "created_at": "2026-10-16T05:09:55.776201+00:00",
+      "delivered_at": "2026-10-16T05:10:28.31062+00:00",
+      "lifetime_attempt_count": 2
+    }
+  ],
+  "queue_samples": [
+    {
+      "offset_s": 0.00013162499999452848,
+      "statuses": {
+        "in_flight": 1
+      },
+      "attempts": 1,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 1.6167873750000012,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 3.617256416999993,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 5.629886209000006,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 7.636531749999989,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 9.63905995899998,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 11.641988916999992,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 13.649679249999991,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 15.654751417,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 17.665810374999978,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 19.665438792000003,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 21.671731542000003,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 23.675787999999983,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 25.68249266699999,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 27.704568249999994,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 29.69452633399999,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 31.697953334000005,
+      "statuses": {
+        "in_flight": 2
+      },
+      "attempts": 2,
+      "successes": 0,
+      "lease_expirations": 0
+    },
+    {
+      "offset_s": 33.70373574999999,
+      "statuses": {
+        "delivered": 2
+      },
+      "attempts": 4,
+      "successes": 2,
+      "lease_expirations": 2
+    }
+  ],
+  "database_resource_samples": [
+    {
+      "offset_s": 1.1116643339999825,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "8.47%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.30%",
+        "MemUsage": "182.5MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.1MB / 49.3MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 3.1168551250000007,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "16.31%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "180.6MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.2MB / 49.4MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 5.124667833999979,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "10.82%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181.3MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.3MB / 49.5MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 7.131207083999982,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "9.88%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "180.7MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.4MB / 49.6MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 9.135184708999986,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "10.04%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181.2MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.6MB / 49.7MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 11.139606624999999,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "12.58%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.29%",
+        "MemUsage": "181.4MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.7MB / 49.8MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 13.147809249999995,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "13.19%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.8MB / 49.9MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 15.152398791999985,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "11.04%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181.2MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "75.9MB / 50MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 17.160519709,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "10.18%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181.3MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.1MB / 50.1MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 19.164388333999995,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "12.01%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "180.8MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.2MB / 50.2MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 21.168792749999994,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "13.67%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.32%",
+        "MemUsage": "184.2MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.3MB / 50.3MB",
+        "PIDs": "16"
+      }
+    },
+    {
+      "offset_s": 23.175273250000004,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "11.92%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "180.9MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.4MB / 50.3MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 25.18133254199998,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "10.05%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.29%",
+        "MemUsage": "181.6MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.5MB / 50.4MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 27.199650166999987,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "9.67%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181.1MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.7MB / 50.5MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 29.19396929199999,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "11.83%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.31%",
+        "MemUsage": "183.2MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.8MB / 50.6MB",
+        "PIDs": "21"
+      }
+    },
+    {
+      "offset_s": 31.197647499999988,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "12.21%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.28%",
+        "MemUsage": "181MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "76.9MB / 50.7MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 33.203526124999996,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "12.61%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.30%",
+        "MemUsage": "182.1MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "77MB / 50.8MB",
+        "PIDs": "15"
+      }
+    },
+    {
+      "offset_s": 35.217411,
+      "postgres": {
+        "BlockIO": "877kB / 1.54GB",
+        "CPUPerc": "8.44%",
+        "Container": "relayforge-postgres-1",
+        "ID": "03045efbe59a",
+        "MemPerc": "2.30%",
+        "MemUsage": "182.7MiB / 7.75GiB",
+        "Name": "relayforge-postgres-1",
+        "NetIO": "77.2MB / 50.9MB",
+        "PIDs": "15"
+      }
+    }
+  ],
+  "receiver_packets": [
+    {
+      "started_offset_s": 0.02516108399998984,
+      "http_duration_ms": 2127.536915999997,
+      "status": 204
+    },
+    {
+      "started_offset_s": 1.0255350420000013,
+      "http_duration_ms": 1127.3411669999973,
+      "status": 204
+    },
+    {
+      "started_offset_s": 32.537026,
+      "http_duration_ms": 0.13949999998885687,
+      "status": 204
+    },
+    {
+      "started_offset_s": 33.67452212499998,
+      "http_duration_ms": 0.06575000000452746,
+      "status": 204
+    }
+  ]
+}

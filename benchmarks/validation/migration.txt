@@ -1,0 +1,2 @@
+go run ./cmd/migrate up
+{"time":"2026-10-16T10:42:09.714979+05:30","level":"INFO","msg":"migration complete","direction":"up"}

@@ -1,0 +1,32 @@
+File: relayforge-events.test
+Type: alloc_space
+Time: 2026-10-16 10:35:59 IST
+Showing nodes accounting for 23734.65MB, 97.83% of 24260.12MB total
+Dropped 80 nodes (cum <= 121.30MB)
+      flat  flat%   sum%        cum   cum%
+11358.30MB 46.82% 46.82% 11379.80MB 46.91%  encoding/json/jsontext.(*decoderState).fetch
+ 4197.84MB 17.30% 64.12%  4341.37MB 17.90%  relayforge/internal/events.Envelope
+ 3879.12MB 15.99% 80.11%  3879.12MB 15.99%  encoding/json/jsontext.(*Value).UnmarshalJSON
+ 3632.74MB 14.97% 95.09%  3632.74MB 14.97%  encoding/json/jsontext.Token.String (inline)
+  279.09MB  1.15% 96.24%   279.09MB  1.15%  reflect.mapassign_faststr0
+  248.08MB  1.02% 97.26%   248.08MB  1.02%  encoding/json/jsontext.NewDecoder (inline)
+   62.50MB  0.26% 97.52% 15114.54MB 62.30%  encoding/json.(*Decoder).Token
+   37.50MB  0.15% 97.67% 19910.56MB 82.07%  relayforge/internal/events.Parse
+   36.50MB  0.15% 97.82%   284.58MB  1.17%  encoding/json.NewDecoder
+    2.98MB 0.012% 97.83% 24255.44MB   100%  relayforge/internal/events.BenchmarkAcceptancePayload.func1
+         0     0% 97.83%   123.53MB  0.51%  encoding/json.Marshal (inline)
+         0     0% 97.83%  4284.40MB 17.66%  encoding/json.Unmarshal (inline)
+         0     0% 97.83% 11420.30MB 47.07%  encoding/json/jsontext.(*Decoder).ReadToken (inline)
+         0     0% 97.83% 11420.30MB 47.07%  encoding/json/jsontext.(*decoderState).ReadToken
+         0     0% 97.83% 11330.80MB 46.71%  encoding/json/jsontext.(*decoderState).consumeString
+         0     0% 97.83%   123.53MB  0.51%  encoding/json/v2.Marshal
+         0     0% 97.83%  4284.40MB 17.66%  encoding/json/v2.Unmarshal
+         0     0% 97.83%  4264.88MB 17.58%  encoding/json/v2.makeMapArshaler.func3
+         0     0% 97.83%  3879.62MB 15.99%  encoding/json/v2.makeMethodArshaler.func6
+         0     0% 97.83%  4265.38MB 17.58%  encoding/json/v2.unmarshalDecode
+         0     0% 97.83%   279.09MB  1.15%  reflect.Value.SetMapIndex
+         0     0% 97.83%   279.09MB  1.15%  reflect.mapassign_faststr
+         0     0% 97.83% 15553.13MB 64.11%  relayforge/internal/jsonutil.Validate
+         0     0% 97.83% 15114.54MB 62.30%  relayforge/internal/jsonutil.Validate.func1
+         0     0% 97.83% 24255.44MB   100%  testing.(*B).run1.func1
+         0     0% 97.83% 24255.96MB   100%  testing.(*B).runN

@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+/secrets/
+/bin/
+/coverage/
+*.log
+.DS_Store
+
+__pycache__/
+*.pyc
+
+# Local tooling, diagnostics and temporary exports
+/.cache/
+/tmp/
+/dist/
+*.test
+*.out
+*.prof
+*.tmp
+*.swp
+*.swo
+.idea/
+.vscode/

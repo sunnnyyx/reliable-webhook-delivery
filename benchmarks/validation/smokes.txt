@@ -1,0 +1,29 @@
+mkdir -p bin
+go build -o bin/api ./cmd/api
+go build -o bin/worker ./cmd/worker
+go build -o bin/migrate ./cmd/migrate
+go build -o bin/admin ./cmd/admin
+go build -o bin/receiver ./cmd/receiver
+go build -o bin/console ./cmd/console
+python3 scripts/smoke-skeleton.py
+PASS: api readiness, liveness, request IDs, JSON logs, SIGTERM shutdown
+PASS: worker readiness, liveness, request IDs, JSON logs, SIGTERM shutdown
+python3 scripts/smoke-accounts.py
+PASS: admin provisioning, key creation/revocation, tenant disabling, API isolation and rotation
+PASS: credential values absent from API logs
+python3 scripts/smoke-ingestion.py
+PASS: durable fan-out, exact idempotent response after API restart, mismatch, tenant views, deletion cancellation
+PASS: credentials, encryption key, signing secrets, and payload marker absent from API logs
+python3 scripts/smoke-worker.py
+PASS: two actual worker processes delivered 12 signed immutable payloads to the compiled receiver
+PASS: compiled receiver restart and 12 duplicate requests preserved exactly 12 business records
+PASS: one successful attempt each, both worker IDs persisted, bounded shutdown, no payload/secrets in logs
+python3 scripts/smoke-replay.py
+PASS: compiled replay API accepted 20 same-key requests as one cycle; old attempts/bytes preserved
+PASS: replay delivered once, duplicate acknowledged with one durable receiver business record; clean logs/shutdown
+python3 scripts/smoke-rate-limit.py
+PASS: two compiled workers shared one rate=1/burst=1 bucket; both worker IDs persisted
+PASS: startup/runtime Redis outages deferred without attempts; readiness degraded; same workers resumed after restore
+PASS: four signed deliveries, four receiver effects, bounded counters, no payload/credential logs
+python3 scripts/smoke-console.py
+PASS: console sessions/CSRF, real API endpoint/event workflow, exact-byte replay/history, pagination, tenant isolation, revocation, logout and restart
