@@ -2,11 +2,17 @@
 
 The default public demo now uses an isolated, no-login, in-memory playground. Run `make run-demo`; see [deployment instructions](deploy-free.md). The PostgreSQL backend and optional accounts remain separate modes.
 
-## Current milestone
+## Final handoff — 2026-10-21
 
-10 — Benchmarks and hardening: complete. Await continuation before milestone 11, deployment/portfolio.
+The portfolio implementation is finalized. The default entrypoint is the standalone no-login demo (`make run-demo`), with isolated temporary workspaces, signed loopback HTTP delivery, a controlled 503→204 retry example, quotas, CSRF protection and expiry. The full PostgreSQL backend and optional account deployment remain available separately.
 
-There are 12 milestones numbered 0–11. Milestones 0–10 are complete; milestone 11 remains. Prior browser/backend/observability evidence is preserved in the [milestone 9 record](milestone-9-record.md).
+Docker packaging and a Render Blueprint are supplied; public deployment is not configured or verified. No external login, SMTP, database or API key is required for the default playground. Local `.env` and database volumes are preserved. Generated binaries and Python caches can be removed with `make clean`.
+
+Final verification includes Go race tests, vet/formatting checks, Node UI tests and benchmark-analysis unit tests. Browser verification exercised both first-attempt delivery and a two-attempt retry. Historical milestone and benchmark records below are retained as dated implementation evidence, rather than current instructions.
+
+## Historical milestone 10 record
+
+Milestones 0–10 covered the durable backend, console, benchmarks and hardening. The subsequent interface and no-login demo work is summarized above; hosting remains an operator action.
 
 ## Completed work
 

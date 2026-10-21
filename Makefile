@@ -158,3 +158,8 @@ run-demo:
 	$(GO) run ./cmd/demo
 local-demo:
 	./bin/demo
+
+.PHONY: clean
+clean:
+	rm -rf bin coverage
+	find scripts tests -type d -name __pycache__ -prune -exec rm -rf {} +

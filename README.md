@@ -1,4 +1,4 @@
-# RelayForge
+# Reliable Webhook Delivery · RelayForge
 
 **Reliable webhook delivery, with a clear view of every handoff.**
 
@@ -6,9 +6,15 @@ RelayForge moves events from one application to another, keeps a durable record 
 
 For example, an online store can publish `order.created` once. RelayForge records the event, sends it to subscribed services, and shows whether each service acknowledged it. If a service is down, delivery can be retried without asking the store to rebuild its order event.
 
+## Project status
+
+The portfolio implementation is complete: a no-login playground, the full PostgreSQL delivery backend, a responsive red-and-white console, automated verification, and deployment configuration are included. Public hosting has not been configured or verified. This repository is a reference project, not a managed production service.
+
 ## Try the no-login demo
 
 ```sh
+git clone https://github.com/sunnnyyx/reliable-webhook-delivery.git
+cd reliable-webhook-delivery
 make run-demo
 ```
 
@@ -38,7 +44,6 @@ For deployment without a purchased domain or external credentials, see [free dem
 - [Repository layout](#repository-layout)
 - [Documentation](#documentation)
 - [Limitations and next steps](#limitations-and-next-steps)
-- [Push to GitHub](#push-to-github)
 
 ## Features
 
@@ -57,6 +62,10 @@ These features describe the full PostgreSQL backend. The lightweight playground 
 - **Browser console:** publish events, manage endpoints, filter deliveries, inspect attempts, and replay failures. Live refresh, current-page statistics, and activity charts accompany the red-and-white responsive design.
 
 ## Architecture
+
+The default playground runs the browser console, bounded in-memory work queue, and signed HTTP receiver in one process. Visitors receive separate temporary workspaces automatically; the receiver is fixed to loopback. This mode requires no credentials or database.
+
+The full backend uses the following architecture:
 
 ```mermaid
 flowchart LR
@@ -86,8 +95,8 @@ The console uses a Go backend for frontend (BFF). The browser communicates with 
 | Optional dispatch admission | Redis, go-redis |
 | Console | HTML, CSS, vanilla JavaScript, embedded Go assets |
 | Telemetry | OpenTelemetry, Prometheus, Grafana, Jaeger |
-| Public identity | Supabase Auth (GitHub and email codes) |
-| Deployment | Docker image, Render Blueprint, managed PostgreSQL |
+| Optional account identity | Supabase Auth with GitHub OAuth |
+| Deployment | Docker image and Render Blueprint for the standalone demo |
 | Development infrastructure | Docker Compose, Make |
 | Verification | Go tests/race detector, real PostgreSQL/Redis integration tests, Python smoke scripts, Node built-in UI tests |
 
@@ -237,7 +246,7 @@ The example receiver demonstrates duplicate suppression within its own source/ev
 | `TRACE_ENDPOINT`, `TRACE_SAMPLE_RATIO` | Optional trace export configuration |
 | `CONSOLE_ADDR`, `CONSOLE_API_URL` | Local console listener and upstream API |
 
-Local development needs no external identity/email service. Public GitHub mode requires your Supabase Auth project, a GitHub OAuth app, and hosted PostgreSQL. No SMTP service or purchased domain is required. All application credentials are generated locally or supplied by the operator. API keys are hashed in storage; endpoint signing secrets are encrypted. The console keeps tenant keys in server memory with 30-minute sessions, CSRF protection, and no browser localStorage credential persistence.
+The no-login playground needs no credentials or external identity/email service. The optional account-based backend requires your Supabase Auth project, a GitHub OAuth app, and hosted PostgreSQL. No SMTP service or purchased domain is required. All application credentials are generated locally or supplied by the operator. API keys are hashed in storage; endpoint signing secrets are encrypted. The console keeps tenant keys in server memory with 30-minute sessions, CSRF protection, and no browser localStorage credential persistence.
 
 Optional development services:
 
@@ -280,7 +289,7 @@ Benchmarks, query plans, profiles, and the recorded security scan are retained i
 
 ```text
 api/                    OpenAPI specification
-cmd/                    API, worker, console, admin, migration, receiver entrypoints
+cmd/                    Demo, API, worker, console, web, admin, migration and receiver entrypoints
 internal/               Domain logic, storage, HTTP handlers, security and telemetry
   console/assets/       Embedded HTML, CSS, JavaScript and SVG assets
 migrations/             Sender and receiver SQL migrations
@@ -290,7 +299,9 @@ tests/integration/      Real PostgreSQL/Redis integration scenarios
 benchmarks/             Recorded results, query plans, profiles and methodology
 docs/                   Setup guides, guarantees, runbooks and architecture decisions
 .env.example            Safe configuration template
-Makefile                Build, run and verification commands
+Dockerfile              Default standalone demo image
+render.yaml             Free-plan demo deployment configuration
+Makefile                Build, run, clean and verification commands
 ```
 
 Local `.env`, generated binaries, caches, logs, and editor files are excluded by `.gitignore`. There are no prebuilt executables in a source checkout.
@@ -299,7 +310,8 @@ Local `.env`, generated binaries, caches, logs, and editor files are excluded by
 
 | Guide | Covers |
 | --- | --- |
-| [Free public deployment](docs/deploy-free.md) | Render, Neon, Supabase Auth, OAuth, environment and live verification |
+| [No-login demo deployment](docs/deploy-free.md) | Single-service Render setup, temporary workspaces and limits |
+| [Optional account deployment](docs/deploy-accounts.md) | Advanced Supabase/GitHub identity and PostgreSQL setup |
 | [Setup](docs/setup.md) | Dependencies, environment variables and Make targets |
 | [Architecture](docs/architecture.md) | Components, storage and process boundaries |
 | [Accounts and endpoints](docs/accounts-and-endpoints.md) | Provisioning, API keys, subscriptions and rotation |
@@ -312,26 +324,16 @@ Local `.env`, generated binaries, caches, logs, and editor files are excluded by
 | [Architecture decisions](docs/decisions/) | Design rationale and tradeoffs |
 | [Original specification](docs/project-specification.md) | Original requirements, including planned work |
 
-## Limitations and next steps
+## Limitations and operations
 
-The core delivery system, red-and-white console, public account integration, Docker packaging, Render Blueprint, and verification tooling are implemented. The development console keeps API-key login on loopback. Production mode uses GitHub identity and HTTPS-origin checks. Dashboard statistics describe the current delivery page, not lifetime totals.
+The no-login playground is intentionally temporary: data expires after 30 minutes and disappears on restart. It has fixed internal destinations, 10 events per workspace, a 16 KiB event limit, and bounded concurrency. It demonstrates delivery and retry; it does not provide durable storage or the full backend’s replay guarantees. Hosting that stops the process also resets the playground.
 
-The [public deployment guide](docs/deploy-free.md) explains required Supabase, OAuth, PostgreSQL and Render setup. These external services must be configured and verified before sharing a deployment. Free Render services sleep: queued work persists, but delivery attempts pause until wake-up. Use always-on compute for continuous delivery.
+The PostgreSQL backend supports durable acceptance and delivery recovery, but operating it publicly still requires appropriate infrastructure, backups/restore drills, egress controls, secret management, retention cleanup, and capacity testing. Optional account deployment is separate from the default demo. Dashboard statistics describe the current delivery page, not lifetime totals.
 
-Backups/restore drills, production egress policies, secret/key management, retention cleanup, shared sessions for multiple instances, and longer capacity/failure tests remain operator work. The development Compose stack is not production infrastructure. Read the current implementation guides rather than assuming every original specification item is complete.
-
-## Push to GitHub
-
-Create an empty repository on GitHub, then run these commands from this project's root. Replace the remote URL with your own repository URL:
+## Keeping the checkout clean
 
 ```sh
-git status --short
-git add .
-git diff --cached --stat
-git commit -m "Initial RelayForge implementation"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/relayforge.git
-git push -u origin main
+make clean
 ```
 
-If `origin` is already configured, use that existing remote instead of adding it again. Commit source and `.env.example`; keep your real `.env`, binaries, and local backups private.
+This removes generated executables, coverage output and Python bytecode caches. Run `make build` to recreate binaries, or use `make run-demo` directly. Your private `.env`, database volumes, source, tests, and recorded benchmark evidence are preserved. Do not commit real credentials or local database exports.
