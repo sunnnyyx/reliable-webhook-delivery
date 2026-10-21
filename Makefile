@@ -50,6 +50,8 @@ build:
 	$(GO) build -o bin/admin ./cmd/admin
 	$(GO) build -o bin/receiver ./cmd/receiver
 	$(GO) build -o bin/console ./cmd/console
+	$(GO) build -o bin/web ./cmd/web
+	$(GO) build -o bin/demo ./cmd/demo
 
 # Requires Python 3 and a migrated development PostgreSQL instance.
 test-smoke: build
@@ -146,3 +148,13 @@ local-admin:
 .PHONY: test-console-ui
 test-console-ui:
 	node --test internal/console/ui.test.cjs
+
+.PHONY: run-web
+run-web:
+	$(GO) run ./cmd/web
+
+.PHONY: run-demo local-demo
+run-demo:
+	$(GO) run ./cmd/demo
+local-demo:
+	./bin/demo

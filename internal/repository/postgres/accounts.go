@@ -112,7 +112,7 @@ func (s *Store) Authenticate(ctx context.Context, token string) (string, error) 
 		return "", endpoints.ErrNotFound
 	}
 	var tenant string
-	e := s.DB.QueryRow(ctx, `SELECT k.tenant_id FROM api_keys k JOIN tenants t ON t.id=k.tenant_id WHERE k.key_hash=$1 AND k.revoked_at IS NULL AND t.disabled_at IS NULL`, security.Hash(token)).Scan(&tenant)
+	e := s.DB.QueryRow(ctx, `SELECT k.tenant_id FROM api_keys k JOIN tenants t ON t.id=k.tenant_id WHERE k.key_hash=$1 AND k.revoked_at IS NULL AND (k.expires_at IS NULL OR k.expires_at>now()) AND t.disabled_at IS NULL`, security.Hash(token)).Scan(&tenant)
 	if errors.Is(e, pgx.ErrNoRows) {
 		e = endpoints.ErrNotFound
 	}

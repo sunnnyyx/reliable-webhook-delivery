@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: reliable-webhook-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /health/ready
+    envVars:
+      - key: PUBLIC_URL
+        sync: false

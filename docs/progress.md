@@ -1,5 +1,7 @@
 # Project progress
 
+The default public demo now uses an isolated, no-login, in-memory playground. Run `make run-demo`; see [deployment instructions](deploy-free.md). The PostgreSQL backend and optional accounts remain separate modes.
+
 ## Current milestone
 
 10 — Benchmarks and hardening: complete. Await continuation before milestone 11, deployment/portfolio.
@@ -67,3 +69,19 @@ Applied the user's collage-style reference to the functional console: cream grid
 Replaced the milestone-oriented root README with a project overview, architecture diagram, stack, portable setup, console/API workflow, credentials guide, guarantees, verification commands, documentation index, and remaining deployment work. Archived compiled binaries, draft screenshots, local demo notes, redundant web pointer, caches and placeholder files outside the repository. Preserved private ignored .env and application databases. Removed machine-specific setup instructions and personal workspace paths from engineering records; original specification remains unchanged. Checked publishable files against current private local credentials with no matches, verified README/documentation links, and retained benchmark evidence. Run make build to regenerate binaries before using local-* targets.
 
 Cleanup verification: all Go unit tests, go vet, five console UI tests, and two benchmark-analysis tests passed. Documentation links and exclusion rules validated; original specification byte comparison passed. No Git commit, remote configuration, or push was performed.
+
+### Red-and-white console — 2026-10-17
+
+Replaced the paper-grid/pastel treatment with a restrained red-and-white theme based on the supplied reference. Removed decorative stickers, rotations and hard shadows; kept the directional relay logo, now red, and preserved existing controls and data semantics. Updated interface documentation. Console builds, five UI checks and console Go tests pass. Browser verification of the real tenant dashboard at desktop and 390px phone width found no page overflow or console warnings/errors. Rebuild and restart the console to update an existing listener.
+
+### Public accounts and free demo deployment — 2026-10-17
+
+Implemented production email/password accounts through Supabase Auth with confirmation/recovery codes, authoritative remote user verification, automatic tenant binding, expiring browser credentials, password-reset session invalidation, and tenant-scoped integration API-key creation/listing/revocation. Migration 10 adds web account mappings and optional API-key expiry; existing permanent keys remain valid. Hosted cookies require Secure/HttpOnly/SameSite and explicit HTTPS origins; development API-key login remains loopback-only. Provider tokens and passwords are not persisted by the application.
+
+Added a supervised single-port web gateway, startup migrations, child-process failure handling, aggregate readiness, non-root multi-stage Docker image, Render free Blueprint, GitHub CI, and public deployment/SMTP/email-template instructions. Worker execution pauses while a free host sleeps; database work persists subject to existing age/retry limits. No live provider accounts, SMTP, or hosted deployment were created.
+
+Verification: all Go unit race tests, full PostgreSQL/Redis integration race suite (including concurrent web provisioning, identity isolation, credential expiry and reset invalidation), five console UI tests, go vet, benchmark-analysis tests, real binary console/API/worker smoke, gateway routing/readiness tests, container build and missing-config rejection passed. Browser fixture verified sign-up/confirmation/recovery transitions and 390px layout without overflow or browser errors. Live email/provider sign-in, certificate configuration and Render sleep/wake acceptance require the operator's provider projects and remain explicitly documented. Private .env and original specification preserved; source changes not pushed.
+
+### GitHub sign-in replaces public email/password — 2026-10-21
+
+Removed public password, signup-code, and recovery routes/forms. Added Supabase GitHub authorization with server-held PKCE verifiers, five-minute browser-bound single-use flows, remote identity validation requiring a GitHub identity, and opaque application sessions. The cross-site callback GET is explicitly limited to its exact route. Local GitHub mode is available through CONSOLE_AUTH=github; original local API-key mode remains available. SMTP, Google App Passwords and purchased domains are no longer required for login. Deployment instructions now cover GitHub OAuth App registration, Supabase credentials/provider configuration, exact callback allowlists and local testing. Obsolete unsaved email template drafts were archived outside the repository. Live OAuth consent still requires the operator to configure their GitHub OAuth App credentials in Supabase.

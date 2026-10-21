@@ -7,8 +7,10 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"relayforge/internal/config"
 	"relayforge/internal/console"
 	"relayforge/internal/process"
+	"relayforge/internal/repository/postgres"
 	"syscall"
 	"time"
 )
@@ -16,8 +18,8 @@ import (
 func main() { os.Exit(run()) }
 func run() int {
 	log := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	if p := os.Getenv("PROFILE"); p != "" && p != "development" {
-		log.Error("console currently supports PROFILE=development only")
+	if p := os.Getenv("PROFILE"); p != "" && p != "development" && p != "production" {
+		log.Error("invalid PROFILE")
 		return 1
 	}
 	address := os.Getenv("CONSOLE_ADDR")
@@ -28,7 +30,39 @@ func run() int {
 	if upstream == "" {
 		upstream = "http://127.0.0.1:8080"
 	}
-	handler, err := console.New(address, upstream)
+	var handler *console.Server
+	var err error
+	if mode := os.Getenv("CONSOLE_AUTH"); mode != "" && mode != "api-key" && mode != "github" {
+		log.Error("CONSOLE_AUTH must be api-key or github")
+		return 1
+	}
+	if os.Getenv("PROFILE") == "production" || os.Getenv("CONSOLE_AUTH") == "github" {
+		cfg, e := config.Load(os.Getenv)
+		if e != nil {
+			log.Error("invalid production configuration")
+			return 1
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), cfg.StartupTimeout)
+		defer cancel()
+		db, e := postgres.Open(ctx, cfg.DatabaseURL, cfg.DBMaxConns)
+		if e != nil {
+			log.Error("console database unavailable")
+			return 1
+		}
+		defer db.Close()
+		identity, e := console.NewIdentity(os.Getenv("SUPABASE_URL"), os.Getenv("SUPABASE_PUBLISHABLE_KEY"))
+		if e != nil {
+			log.Error("invalid identity configuration")
+			return 1
+		}
+		if os.Getenv("PROFILE") == "production" {
+			handler, err = console.NewHosted(address, upstream, os.Getenv("PUBLIC_URL"), identity, &postgres.Store{DB: db})
+		} else {
+			handler, err = console.NewLocalGitHub(address, upstream, identity, &postgres.Store{DB: db})
+		}
+	} else {
+		handler, err = console.New(address, upstream)
+	}
 	if err != nil {
 		log.Error("invalid console configuration", "error", err.Error())
 		return 1

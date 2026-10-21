@@ -1,5 +1,5 @@
-// Package console provides a loopback-only browser BFF. API credentials live in
-// bounded process memory; the browser receives only an opaque short-lived cookie.
+// Package console provides local and HTTPS-proxied browser access. API credentials
+// live in bounded process memory; browsers receive opaque short-lived cookies.
 package console
 
 import (
@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"relayforge/internal/playground"
 	"strconv"
 	"strings"
 	"sync"
@@ -36,7 +37,13 @@ type session struct {
 	expires   time.Time
 }
 type Server struct {
+	demo        *playground.Engine
 	origin      string
+	secure      bool
+	identity    *Identity
+	accounts    Accounts
+	authSlots   chan struct{}
+	flows       map[[32]byte]oauthFlow
 	upstream    *url.URL
 	client      *http.Client
 	mu          sync.Mutex
@@ -75,8 +82,15 @@ func New(address, apiURL string) (*Server, error) {
 }
 func (s *Server) Close() {
 	s.client.CloseIdleConnections()
+	if s.demo != nil {
+		s.demo.Close()
+	}
+	if s.identity != nil {
+		s.identity.client.CloseIdleConnections()
+	}
 	s.mu.Lock()
 	clear(s.sessions)
+	clear(s.flows)
 	s.mu.Unlock()
 }
 func random() string {
@@ -113,7 +127,7 @@ func (s *Server) remove(w http.ResponseWriter, hash [32]byte) {
 	s.mu.Lock()
 	delete(s.sessions, hash)
 	s.mu.Unlock()
-	http.SetCookie(w, &http.Cookie{Name: cookieName, Value: "", Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: -1})
+	http.SetCookie(w, &http.Cookie{Name: cookieName, Value: "", Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, Secure: s.secure, MaxAge: -1})
 }
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := w.Header()
@@ -123,11 +137,20 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.Set("Referrer-Policy", "no-referrer")
 	h.Set("X-Frame-Options", "DENY")
 	h.Set("Content-Security-Policy", "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'")
-	if "http://"+r.Host != s.origin {
-		fail(w, 403, "Use the configured console loopback address.")
+	scheme := "http://"
+	if s.secure {
+		scheme = "https://"
+		h.Set("Strict-Transport-Security", "max-age=31536000")
+	}
+	if s.demo != nil && r.URL.Path == "/health/ready" && r.Method == "GET" {
+		write(w, 200, map[string]string{"status": "ready"})
 		return
 	}
-	if site := r.Header.Get("Sec-Fetch-Site"); site != "" && site != "same-origin" && site != "none" {
+	if scheme+r.Host != s.origin {
+		fail(w, 403, "Use the configured application address.")
+		return
+	}
+	if site := r.Header.Get("Sec-Fetch-Site"); site != "" && site != "same-origin" && site != "none" && !(s.identity != nil && r.Method == "GET" && r.URL.Path == "/auth/callback") {
 		fail(w, 403, "Cross-site access denied.")
 		return
 	}
@@ -136,7 +159,71 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fail(w, 403, "Same-origin request required.")
 		return
 	}
+	if r.URL.Path == "/auth/config" && r.Method == "GET" {
+		write(w, 200, map[string]any{"enabled": s.identity != nil, "demo": s.demo != nil})
+		return
+	}
+	if s.demo != nil && r.URL.Path == "/demo/session" && r.Method == "POST" {
+		s.demoSession(w, r)
+		return
+	}
+	if strings.HasPrefix(r.URL.Path, "/auth/") && s.identity != nil {
+		s.auth(w, r)
+		return
+	}
+	if r.URL.Path == "/account/api-key" && s.accounts != nil {
+		v, _, ok := s.get(r)
+		if !ok {
+			fail(w, 401, "Sign in again.")
+			return
+		}
+		if r.Method == "GET" {
+			keys, err := s.accounts.WebKeys(r.Context(), v.key)
+			if err != nil {
+				fail(w, 401, "Sign in again.")
+				return
+			}
+			write(w, 200, keys)
+			return
+		}
+		if len(r.Header.Values("X-CSRF-Token")) != 1 || subtle.ConstantTimeCompare([]byte(r.Header.Get("X-CSRF-Token")), []byte(v.csrf)) != 1 {
+			fail(w, 403, "Refresh and try again.")
+			return
+		}
+		if r.Method == "DELETE" {
+			var input struct {
+				ID string `json:"id"`
+			}
+			d := json.NewDecoder(http.MaxBytesReader(w, r.Body, 512))
+			d.DisallowUnknownFields()
+			if d.Decode(&input) != nil || d.Decode(new(any)) != io.EOF || !resourceID(input.ID) {
+				fail(w, 400, "Invalid key identifier.")
+				return
+			}
+			if err := s.accounts.RevokeWebKey(r.Context(), v.key, input.ID); err != nil {
+				fail(w, 400, "Could not revoke key.")
+				return
+			}
+			w.WriteHeader(204)
+			return
+		}
+		if r.Method != "POST" {
+			fail(w, 405, "Method unavailable.")
+			return
+		}
+		c, err := s.accounts.MintWebKey(r.Context(), v.key)
+		if err != nil {
+			fail(w, 400, "Could not create an API key. The limit is 10 active keys.")
+			return
+		}
+		write(w, 201, c)
+		return
+	}
 	if r.URL.Path == "/session" && r.Method == "POST" {
+		if s.identity != nil || s.demo != nil {
+			fail(w, 404, "Use the configured sign-in or demo entry.")
+			return
+		}
 		s.login(w, r)
 		return
 	}
@@ -160,6 +247,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if r.URL.Path == "/session" {
+			if s.accounts != nil {
+				_ = s.accounts.DeleteBrowserKey(r.Context(), v.key)
+			}
+			if s.demo != nil {
+				s.demo.Remove(v.key)
+			}
 			s.remove(w, hash)
 			w.WriteHeader(204)
 			return
@@ -171,6 +264,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		if mutation && r.Header.Get("Content-Type") != "application/json" {
 			fail(w, 415, "Use application/json.")
+			return
+		}
+		if s.demo != nil {
+			s.demo.ServeAPI(w, r, v.key)
 			return
 		}
 		body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, maxBody))
@@ -204,13 +301,13 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fail(w, 405, "Method unavailable.")
 		return
 	}
-	file := map[string]string{"/": "index.html", "/app.js": "app.js", "/style.css": "style.css", "/favicon.svg": "favicon.svg"}[r.URL.Path]
+	file := map[string]string{"/": "index.html", "/app.js": "app.js", "/auth.js": "auth.js", "/style.css": "style.css", "/favicon.svg": "favicon.svg"}[r.URL.Path]
 	if file == "" {
 		fail(w, 404, "Page unavailable.")
 		return
 	}
 	data, _ := assets.ReadFile("assets/" + file)
-	mime := map[string]string{"index.html": "text/html; charset=utf-8", "app.js": "text/javascript; charset=utf-8", "style.css": "text/css; charset=utf-8", "favicon.svg": "image/svg+xml"}[file]
+	mime := map[string]string{"index.html": "text/html; charset=utf-8", "app.js": "text/javascript; charset=utf-8", "auth.js": "text/javascript; charset=utf-8", "style.css": "text/css; charset=utf-8", "favicon.svg": "image/svg+xml"}[file]
 	h.Set("Content-Type", mime)
 	w.WriteHeader(200)
 	if r.Method != "HEAD" {
@@ -317,22 +414,42 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	s.startSession(w, r, input.Key)
+}
+
+func (s *Server) startSession(w http.ResponseWriter, r *http.Request, key string) {
 	token := random()
-	v := session{key: input.Key, csrf: random(), expires: now.Add(lifetime)}
+	v := session{key: key, csrf: random(), expires: s.now().Add(lifetime)}
 	s.mu.Lock()
+	for hash, existing := range s.sessions {
+		if !s.now().Before(existing.expires) {
+			delete(s.sessions, hash)
+		}
+	}
 	if len(s.sessions) >= maxSessions {
 		s.mu.Unlock()
+		if s.accounts != nil {
+			_ = s.accounts.DeleteBrowserKey(r.Context(), key)
+		}
+		if s.demo != nil {
+			s.demo.Remove(key)
+		}
 		fail(w, 503, "Console session capacity reached.")
 		return
 	}
 	s.sessions[sha256.Sum256([]byte(token))] = v
 	s.mu.Unlock()
 	// A repeated login rotates and invalidates this browser's prior session.
-	if _, hash, ok := s.get(r); ok {
+	if prior, hash, ok := s.get(r); ok {
+		if s.accounts != nil {
+			_ = s.accounts.DeleteBrowserKey(r.Context(), prior.key)
+		}
 		s.mu.Lock()
 		delete(s.sessions, hash)
 		s.mu.Unlock()
 	}
-	http.SetCookie(w, &http.Cookie{Name: cookieName, Value: token, Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: int(lifetime.Seconds())})
+	http.SetCookie(w, &http.Cookie{Name: cookieName, Value: token, Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, Secure: s.secure, MaxAge: int(lifetime.Seconds())})
 	write(w, 200, map[string]any{"csrf": v.csrf, "expires_at": v.expires})
 }
+
+func resourceID(id string) bool { return resource.MatchString("/v1/events/" + id) }

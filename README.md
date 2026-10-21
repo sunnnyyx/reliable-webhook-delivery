@@ -6,7 +6,24 @@ RelayForge moves events from one application to another, keeps a durable record 
 
 For example, an online store can publish `order.created` once. RelayForge records the event, sends it to subscribed services, and shows whether each service acknowledged it. If a service is down, delivery can be retried without asking the store to rebuild its order event.
 
-> This is a working local development project. Public hosting, production infrastructure, and a production-ready hosted dashboard are not included.
+## Try the no-login demo
+
+```sh
+make run-demo
+```
+
+Open **http://127.0.0.1:8091**. Requires Go; no database, Docker, API key, account, or external service is needed. If another console is using port 8091, use `DEMO_ADDR=127.0.0.1:8105 make run-demo`.
+
+Click **Send sample event** to watch a signed HTTP delivery, or **Try a retry** to see HTTP 503 followed by a successful retry. Each visitor gets an isolated temporary workspace automatically.
+
+| Mode | Data | Destinations | Setup |
+| --- | --- | --- | --- |
+| Public playground (`cmd/demo`) | In memory; expires after 30 minutes or restart | Fixed built-in receiver | One Go process, no login |
+| Full backend (instructions below) | Durable PostgreSQL storage | Configurable webhook endpoints | Database, API, worker and tenant API key |
+
+The playground allows 10 events per workspace, 16 KiB per event, and up to 128 active visitors. It demonstrates real HTTP signing, delivery and retry, but does **not** provide the full backend’s durability or replay guarantees. Use sample data only. **End demo** deletes the current workspace.
+
+For deployment without a purchased domain or external credentials, see [free demo deployment](docs/deploy-free.md). Optional account-based deployment is documented separately in [account deployment](docs/deploy-accounts.md).
 
 ## Contents
 
@@ -25,6 +42,8 @@ For example, an online store can publish `order.created` once. RelayForge record
 
 ## Features
 
+These features describe the full PostgreSQL backend. The lightweight playground above is a separate demonstration mode.
+
 - **Durable acceptance:** event storage, delivery fan-out, and the idempotency receipt commit together in PostgreSQL before the API returns `202 Accepted`.
 - **Tenant isolation:** API keys authenticate each workspace; resource queries are scoped to that tenant.
 - **Endpoint management:** subscribe to event types or `*`, pause/enable endpoints, rotate signing secrets, and delete endpoints while retaining history.
@@ -34,7 +53,8 @@ For example, an online store can publish `order.created` once. RelayForge record
 - **Receiver deduplication example:** signature verification and a receiver-owned transaction prevent duplicate business effects for the same trusted source/event.
 - **Admission controls:** PostgreSQL-backed backlog and in-flight bounds, with optional distributed token-bucket admission through Redis.
 - **Operational visibility:** private health/metrics listeners, OpenTelemetry traces, and optional Prometheus, Grafana, and Jaeger services.
-- **Browser console:** publish events, manage endpoints, filter deliveries, inspect attempts, and replay failures. Live refresh, current-page statistics, and activity charts accompany the paper-inspired responsive design.
+- **Public accounts:** Supabase GitHub sign-up, OAuth sign-in, isolated workspaces, and integration API-key creation/revocation.
+- **Browser console:** publish events, manage endpoints, filter deliveries, inspect attempts, and replay failures. Live refresh, current-page statistics, and activity charts accompany the red-and-white responsive design.
 
 ## Architecture
 
@@ -52,7 +72,7 @@ flowchart LR
     Worker -. Metrics and traces .-> Observe
 ```
 
-The code is a modular monolith shared by separate API, worker, admin, migration, console, and receiver executables. PostgreSQL is both the durable event store and delivery queue. Redis is optional; it does not own accepted events.
+The code is a modular monolith shared by separate API, worker, admin, migration, console, receiver, and hosted web gateway executables. PostgreSQL is both the durable event store and delivery queue. Redis is optional; it does not own accepted events.
 
 The console uses a Go backend for frontend (BFF). The browser communicates with that server, which holds the tenant key in a short-lived session and calls the API. Static HTML, CSS, JavaScript, and SVG assets are embedded in the console binary; there is no frontend build pipeline.
 
@@ -66,12 +86,16 @@ The console uses a Go backend for frontend (BFF). The browser communicates with 
 | Optional dispatch admission | Redis, go-redis |
 | Console | HTML, CSS, vanilla JavaScript, embedded Go assets |
 | Telemetry | OpenTelemetry, Prometheus, Grafana, Jaeger |
+| Public identity | Supabase Auth (GitHub and email codes) |
+| Deployment | Docker image, Render Blueprint, managed PostgreSQL |
 | Development infrastructure | Docker Compose, Make |
 | Verification | Go tests/race detector, real PostgreSQL/Redis integration tests, Python smoke scripts, Node built-in UI tests |
 
 Exact Go dependency versions are pinned in [go.mod](go.mod); container versions are in [deploy/compose.yaml](deploy/compose.yaml).
 
 ## Run locally
+
+The following steps run the full backend. For the simpler playground, use `make run-demo` above.
 
 ### Prerequisites
 
@@ -189,6 +213,8 @@ The [OpenAPI contract](api/openapi.json) documents endpoints, request/response s
 
 ## Delivery guarantees
 
+These guarantees apply to the PostgreSQL backend, not the temporary in-memory playground.
+
 - **At least once:** network ambiguity can cause duplicate requests. Receivers must deduplicate where duplicate effects matter.
 - **Atomic acceptance:** the event and matching delivery rows persist together before a successful response.
 - **Immutable delivery bytes:** retries and replay use the saved event envelope instead of reconstructing it from a JSON view.
@@ -211,7 +237,7 @@ The example receiver demonstrates duplicate suppression within its own source/ev
 | `TRACE_ENDPOINT`, `TRACE_SAMPLE_RATIO` | Optional trace export configuration |
 | `CONSOLE_ADDR`, `CONSOLE_API_URL` | Local console listener and upstream API |
 
-No paid external API, AI service key, or email provider is required. All application credentials are generated locally or supplied by the operator. API keys are hashed in storage; endpoint signing secrets are encrypted. The console keeps tenant keys in server memory with 30-minute sessions, CSRF protection, and no browser localStorage credential persistence.
+Local development needs no external identity/email service. Public GitHub mode requires your Supabase Auth project, a GitHub OAuth app, and hosted PostgreSQL. No SMTP service or purchased domain is required. All application credentials are generated locally or supplied by the operator. API keys are hashed in storage; endpoint signing secrets are encrypted. The console keeps tenant keys in server memory with 30-minute sessions, CSRF protection, and no browser localStorage credential persistence.
 
 Optional development services:
 
@@ -273,6 +299,7 @@ Local `.env`, generated binaries, caches, logs, and editor files are excluded by
 
 | Guide | Covers |
 | --- | --- |
+| [Free public deployment](docs/deploy-free.md) | Render, Neon, Supabase Auth, OAuth, environment and live verification |
 | [Setup](docs/setup.md) | Dependencies, environment variables and Make targets |
 | [Architecture](docs/architecture.md) | Components, storage and process boundaries |
 | [Accounts and endpoints](docs/accounts-and-endpoints.md) | Provisioning, API keys, subscriptions and rotation |
@@ -287,9 +314,11 @@ Local `.env`, generated binaries, caches, logs, and editor files are excluded by
 
 ## Limitations and next steps
 
-The core delivery system, console, observability setup, and local verification tooling are implemented. The current console is intentionally restricted to development and loopback; it is not a public SaaS login system. Dashboard statistics describe the current delivery page, not lifetime totals.
+The core delivery system, red-and-white console, public account integration, Docker packaging, Render Blueprint, and verification tooling are implemented. The development console keeps API-key login on loopback. Production mode uses GitHub identity and HTTPS-origin checks. Dashboard statistics describe the current delivery page, not lifetime totals.
 
-Production deployment remains future work: TLS ingress, network/egress controls, secret management and key rotation procedures, database backups/restore drills, image digest pinning, CI/CD, hosted identity/session design, retention cleanup, and longer capacity/failure tests. The Compose stack is development infrastructure. Read the current implementation guides rather than assuming every item in the original specification is complete.
+The [public deployment guide](docs/deploy-free.md) explains required Supabase, OAuth, PostgreSQL and Render setup. These external services must be configured and verified before sharing a deployment. Free Render services sleep: queued work persists, but delivery attempts pause until wake-up. Use always-on compute for continuous delivery.
+
+Backups/restore drills, production egress policies, secret/key management, retention cleanup, shared sessions for multiple instances, and longer capacity/failure tests remain operator work. The development Compose stack is not production infrastructure. Read the current implementation guides rather than assuming every original specification item is complete.
 
 ## Push to GitHub
 

@@ -2,6 +2,7 @@
 const $ = s => document.querySelector(s);
 const titles = {deliveries:['Overview','A little clarity for every delivery.'],events:['Events','Start something. We’ll handle the handoff.'],endpoints:['Endpoints','The right message. The right destination.']};
 const labels = {pending:'Queued',in_flight:'Sending',retry_scheduled:'Retry scheduled',delivered:'Delivered',dead_letter:'Failed',cancelled:'Cancelled',enabled:'Enabled',disabled:'Paused'};
+let hostedAuth = false, demoMode = false;
 let csrf = '', view = 'deliveries', epoch = 0, filters = {}, cursors = {}, pending = false;
 let live = true, lastPollAt = 0, currentCursor = '', seenDeliveries = new Set(), hasDeliveryPage = false;
 const fmt = x => x ? new Date(x).toLocaleString() : '—';
@@ -12,6 +13,7 @@ function clearMessage(){$('#notice').hidden=true;}
 function button(text,run,cls='secondary'){const n=node('button',text,cls);n.type='button';n.addEventListener('click',()=>busy(n,run));return n;}
 async function busy(n,run){if(n.disabled)return;const text=n.textContent;n.disabled=true;n.textContent='Working…';try{await run();}catch(e){message(e.message,true);}finally{n.disabled=false;n.textContent=text;}}
 function connected(ok) {
+ $('#account-tools').hidden=!ok||!hostedAuth;
  $('#login').hidden=ok; $('#app').hidden=!ok; $('#logout').hidden=!ok; $('#heading-actions').hidden=!ok;
  $('#session-status').textContent=ok?'Session active':'Disconnected';
  $('#side-status').textContent=ok?'Workspace connected':'Ready to connect';
@@ -19,6 +21,7 @@ function connected(ok) {
  if(!ok) {
   csrf=''; epoch++; pending=false; currentCursor=''; hasDeliveryPage=false; seenDeliveries.clear();
   for(const x of ['deliveries','events','endpoints']) $('#'+x+'-list').replaceChildren();
+  $('#new-api-key').textContent=''; $('#keys-list').replaceChildren();
   $('#publish-result').textContent=''; $('#secret-value').textContent=''; $('#detail-content').replaceChildren();
   $('#updated-at').textContent=''; resetOverview();
   document.querySelectorAll('dialog[open]').forEach(d=>d.close());
@@ -108,7 +111,7 @@ function renderDeliveries(target,items) {
  seenDeliveries=new Set(items.map(x=>x.id)); hasDeliveryPage=true; target.append(t);
 }
 function renderEvent(target,x){const card=node('div',undefined,'row-card');card.append(node('h3',x.type),node('p',x.id,'mono'),node('p',fmt(x.created_at)));card.append(button('View event →',()=>eventDetail(x.id)));target.append(card);}
-function renderEndpoint(target,x){const card=node('div',undefined,'row-card');card.append(node('h3',x.url),badge(x.enabled?'enabled':'disabled'),node('p',x.id,'mono'),node('p',x.subscribed_event_types.join(', ')));const actions=node('div',undefined,'row-actions');actions.append(button(x.enabled?'Pause':'Enable',async()=>{await api('endpoints/'+x.id,'PATCH',{enabled:!x.enabled});message('Endpoint '+(x.enabled?'paused.':'enabled.'));await load();}),button('Rotate secret',async()=>{if(!confirm('Rotate the signing secret? The previous secret remains valid for 24 hours.'))return;const result=await api('endpoints/'+x.id+'/rotate-secret','POST',{});showSecret(result.signing_secret);}),button('Delete',async()=>{if(!confirm('Delete this endpoint and cancel unfinished deliveries?'))return;await api('endpoints/'+x.id,'DELETE');message('Endpoint deleted.');await load();},'secondary danger'));card.append(actions);target.append(card);}
+function renderEndpoint(target,x){if(demoMode){const card=node('div',undefined,'row-card');card.append(node('h3','Built-in signed receiver'),badge('enabled'),node('p','Receives sample events inside this server. External destinations are disabled.'));target.append(card);return;}const card=node('div',undefined,'row-card');card.append(node('h3',x.url),badge(x.enabled?'enabled':'disabled'),node('p',x.id,'mono'),node('p',x.subscribed_event_types.join(', ')));const actions=node('div',undefined,'row-actions');actions.append(button(x.enabled?'Pause':'Enable',async()=>{await api('endpoints/'+x.id,'PATCH',{enabled:!x.enabled});message('Endpoint '+(x.enabled?'paused.':'enabled.'));await load();}),button('Rotate secret',async()=>{if(!confirm('Rotate the signing secret? The previous secret remains valid for 24 hours.'))return;const result=await api('endpoints/'+x.id+'/rotate-secret','POST',{});showSecret(result.signing_secret);}),button('Delete',async()=>{if(!confirm('Delete this endpoint and cancel unfinished deliveries?'))return;await api('endpoints/'+x.id,'DELETE');message('Endpoint deleted.');await load();},'secondary danger'));card.append(actions);target.append(card);}
 function showSecret(secret){$('#secret-value').textContent=secret;$('#secret-dialog').showModal();}
 function jsonBlock(parent,value){parent.append(node('pre',JSON.stringify(value,null,2)));}
 function facts(parent,entries) {
@@ -142,7 +145,7 @@ $('#publish').elements.key.value=crypto.randomUUID();
 $('#publish').addEventListener('submit',e=>{e.preventDefault();busy(e.submitter,async()=>{const input=formData('#publish');let data;try{data=JSON.parse(input.data);}catch{throw Error('Data must be valid JSON. Nothing was submitted.');}const result=await api('events','POST',{type:input.type,data},input.key);$('#publish-result').hidden=false;$('#publish-result').textContent=JSON.stringify(result,null,2);message('Event accepted · '+result.delivery_count+' deliveries. Keep this key for retries; choose New key for your next event.');await load();});});
 $('#endpoint-form').addEventListener('submit',e=>{e.preventDefault();busy(e.submitter,async()=>{const input=formData('#endpoint-form');const result=await api('endpoints','POST',{url:input.url,subscribed_event_types:input.types.split(',').map(t=>t.trim())});showSecret(result.signing_secret);message('Endpoint created. Save its signing secret.');await load();});});
 $('#secret-close').addEventListener('click',()=>$('#secret-dialog').close());$('#secret-dialog').addEventListener('close',()=>{$('#secret-value').textContent='';});$('#detail-close').addEventListener('click',()=>$('#detail-dialog').close());$('#detail-dialog').addEventListener('close',()=>$('#detail-content').replaceChildren());
-(async()=>{try{const result=await request('/session');csrf=result.csrf;connected(true);await load();}catch{connected(false);}})();
+(async()=>{try{const config=await request('/auth/config');if(config.demo)return;const result=await request('/session');csrf=result.csrf;connected(true);await load();}catch{connected(false);}})();
 
 $('#today').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'long',day:'numeric'}).format(new Date()).toUpperCase();
 document.querySelectorAll('[data-go]').forEach(n=>n.addEventListener('click',()=>navigate(n.dataset.go)));

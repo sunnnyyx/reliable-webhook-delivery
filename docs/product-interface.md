@@ -1,6 +1,10 @@
-# Local product interface
+# Browser console
 
-Milestone 9 adds an embedded, buildless HTML/CSS/JavaScript console served by a separate Go binary. It uses the existing API for every operation. No additional JavaScript runtime, database tables, or migrations are needed. This is a local development console; it refuses non-development profiles, non-loopback listeners, and non-loopback API origins. It is not yet a hosted production dashboard.
+The default public demo now uses an isolated, no-login, in-memory playground. Run `make run-demo`; see [deployment instructions](deploy-free.md). The PostgreSQL backend and optional accounts remain separate modes.
+
+The embedded red-and-white dashboard has two modes. Development preserves loopback-only API-key login. Production uses Supabase GitHub OAuth sign-in, automatically isolated workspaces, Secure cookies, and API-key management. Follow [public deployment](deploy-free.md) for identity/OAuth configuration and free-hosting limits.
+
+Milestone 9 adds an embedded, buildless HTML/CSS/JavaScript console served by a separate Go binary. It uses the existing API for every operation. No additional JavaScript runtime, database tables, or migrations are needed. The development mode refuses non-loopback listeners/API origins. Hosted mode requires an explicit HTTPS public origin and Supabase identity configuration; upstream API traffic remains private.
 
 ## Open the console
 
@@ -70,4 +74,4 @@ Quick status tabs use the existing API filter. Detailed status/endpoint/event fi
 
 Optional developer UI checks use Node's built-in runner: `make test-console-ui` (no npm packages; Node is not required to run the app). Five behavior checks cover real page-scoped counts/time bins, cursor-preserving refresh, polling pause guards, logout clearing and unavailable-data semantics. Real browser checks cover overview/filters/details, endpoint navigation, invalid JSON feedback, live timestamp updates and 390-pixel responsive layout. Dashboard counts come from the authenticated API, not sample metrics.
 
-Assets are embedded at build time. Rebuild with `make build`, then restart your console process to load changed assets. The default address is http://127.0.0.1:8091. The current visual design uses grid paper, lime and pink accents, editorial headings, and a directional relay logo. Decorative motion respects reduced-motion preferences.
+Assets are embedded at build time. Rebuild with `make build`, then restart your console process to load changed assets. The default address is http://127.0.0.1:8091. The current visual design uses a red-and-white palette, bold sans-serif headings, thin dividers, and a directional relay logo. Decorative motion respects reduced-motion preferences.

@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+!.env.example
+bin
+benchmarks
+docs
+coverage
+**/__pycache__
+*.log
+.DS_Store
